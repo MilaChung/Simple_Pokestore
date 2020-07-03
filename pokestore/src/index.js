@@ -27,14 +27,29 @@ function App() {
   const [cart, setCart] = useState([]);
 
   //Function to update the value of cart
-  const addToCart = poke => {
-    setCart(cart.concat(pokemon[poke]));
+  const addToCart = pokeAdded => {
+    setCart(cart.concat(pokemon[pokeAdded]));
   };
 
   //Function to calculate total price of cart
   const calculatePrice = () => {
-    return cart.reduce((price, pokemon) => price + pokemon.price, 0);
+    return cart.reduce((price, poke) => price + poke.price, 0);
   };
+
+  return (
+    <div>
+      <h1> Simple Pokestore </h1>
+      <hr />
+      //Show the pokemon list
+      {pokemon.map((poke, pokeAdded) => {
+        <Pokemon key={pokeAdded} poke={poke}>
+          <button>
+
+          </button>
+        </Pokemon>
+      })}
+    </div>
+  );
 }
 
 ReactDOM.render(
