@@ -25,6 +25,11 @@ function App() {
 
   //Initialing the state of cart 
   const [cart, setCart] = useState([]);
+
+  //Function to update the value of cart
+  const addToCart = poke => {
+    setCart(cart.concat(pokemon[poke]));
+  }
 }
 
 ReactDOM.render(
