@@ -29,7 +29,12 @@ function App() {
   //Function to update the value of cart
   const addToCart = poke => {
     setCart(cart.concat(pokemon[poke]));
-  }
+  };
+
+  //Function to calculate total price of cart
+  const calculatePrice = () => {
+    return cart.reduce((price, pokemon) => price + pokemon.price, 0);
+  };
 }
 
 ReactDOM.render(
