@@ -41,13 +41,20 @@ function App() {
       <h1> Simple Pokestore </h1>
       <hr />
       //Show the pokemon list
-      {pokemon.map((poke, pokeAdded) => {
+      {pokemon.map((poke, pokeAdded) => (
         <Pokemon key={pokeAdded} poke={poke}>
-          <button>
-
-          </button>
+          //Button with event, when are clicked call the function addToCart
+          <button onClick={() => addToCart(pokeAdded)}>Add to cart</button>
         </Pokemon>
-      })}
+      ))}
+
+      //Show the total price of cart
+      Cart Total: ${calculatePrice()}
+      {cart.map((poke, pokeAdded) => (
+        <Pokemon key={pokeAdded} poke={poke}>
+          {" "}
+        </Pokemon>
+      ))}
     </div>
   );
 }
