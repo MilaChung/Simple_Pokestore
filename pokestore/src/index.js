@@ -15,6 +15,19 @@ const Pokemon = props => {
   );
 };
 
+const Cart = props => {
+  const { poke, children } = props;
+
+  return (
+    <ul>
+      <li>
+        {poke.name} ${poke.price}
+        {children}
+      </li>
+    </ul>
+  );
+};
+
 function App() {
   //Initialing the state of obj pokemon 
   const [pokemon] = useState ([
@@ -38,24 +51,31 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <h1> Simple Pokestore </h1>
+    <div>
+      <h1 className="title"> Simple Pokestore </h1>
       <hr />
-      {/* Show the pokemon list */}
-      {pokemon.map((poke, pokeAdded) => (
-        <Pokemon key={pokeAdded} poke={poke}>
-          {/* Button with event, when are clicked call the function addToCart */}
-          <button onClick={() => addToCart(pokeAdded)}>Add to cart</button>
-        </Pokemon>
-      ))}
 
-      {/* Show the total price of cart */}
-      Cart Total: ${calculatePrice()}
-      {cart.map((poke, pokeAdded) => (
-        <Pokemon key={pokeAdded} poke={poke}>
-          {" "}
-        </Pokemon>
-      ))}
+      <div className="app">
+        <div className="poke">
+          {/* Show the pokemon list */}
+          {pokemon.map((poke, pokeAdded) => (
+            <Pokemon key={pokeAdded} poke={poke}>
+              {/* Button with event, when are clicked call the function addToCart */}
+              <button onClick={() => addToCart(pokeAdded)}>Add to cart</button>
+            </Pokemon>
+          ))}
+        </div>
+
+        {/* Show the total price of cart */}
+        <div  className="cart">
+          Cart Total: ${calculatePrice()}
+          {cart.map((poke, pokeAdded) => (
+            <Cart key={pokeAdded} poke={poke}>
+              {" "}
+            </Cart>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
