@@ -1,0 +1,10 @@
+.App {
+    text-align: center;
+}
+
+.pokemon {
+    margin: 15px;
+    padding: 30px;
+    border: 1px solid palevioletred;
+    text-align: left;
+}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+import "./style.css"
 
 //Function to call the pokemon and price
 const Pokemon = props => {
@@ -7,7 +8,7 @@ const Pokemon = props => {
   const { poke, addCart } = props;
 
   return (
-    <div>
+    <div className="pokemon">
       {poke.name} ${poke.price}
       {addCart}
     </div>
@@ -37,7 +38,7 @@ function App() {
   };
 
   return (
-    <div>
+    <div className="App">
       <h1> Simple Pokestore </h1>
       <hr />
       {/* Show the pokemon list */}
