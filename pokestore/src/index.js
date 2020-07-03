@@ -5,12 +5,12 @@ import "./style.css"
 //Function to call the pokemon and price
 const Pokemon = props => {
   //Initialing the value of variable pokemon and cart button
-  const { poke, addCart } = props;
+  const { poke, children } = props;
 
   return (
     <div className="pokemon">
       {poke.name} ${poke.price}
-      {addCart}
+      {children}
     </div>
   );
 };
