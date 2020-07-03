@@ -4,11 +4,11 @@ import ReactDOM from 'react-dom';
 //Function to call the pokemon and price
 const Pokemon = props => {
   //Initialing the value of variable pokemon and cart button
-  const { pokemon, addCart} = props;
+  const { poke, addCart } = props;
 
   return (
     <div>
-      {pokemon.name} ${pokemon.price}
+      {poke.name} ${poke.price}
       {addCart}
     </div>
   );
@@ -40,15 +40,15 @@ function App() {
     <div>
       <h1> Simple Pokestore </h1>
       <hr />
-      //Show the pokemon list
+      {/* Show the pokemon list */}
       {pokemon.map((poke, pokeAdded) => (
         <Pokemon key={pokeAdded} poke={poke}>
-          //Button with event, when are clicked call the function addToCart
+          {/* Button with event, when are clicked call the function addToCart */}
           <button onClick={() => addToCart(pokeAdded)}>Add to cart</button>
         </Pokemon>
       ))}
 
-      //Show the total price of cart
+      {/* Show the total price of cart */}
       Cart Total: ${calculatePrice()}
       {cart.map((poke, pokeAdded) => (
         <Pokemon key={pokeAdded} poke={poke}>
@@ -60,7 +60,7 @@ function App() {
 }
 
 ReactDOM.render(
-    <h1>Pokestore</h1>,
+    <App />,
   document.getElementById('root')
 );
 
