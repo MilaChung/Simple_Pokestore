@@ -11,7 +11,7 @@ const Pokemon = props => {
   return (
     <div className="poke">
       <img className="photo" src={poke.sprites.front_default}/>
-        {poke.name} ${(poke.id)*100}
+      <p> {poke.name} ${(poke.id)*100},00 </p>
         {children}
     </div>
   );
@@ -26,8 +26,8 @@ const Cart = props => {
       <li>
         <img className="photo-cart" src={poke.sprites.front_default}/>
         <div>
-          {poke.name} ${(poke.id)*100}
-          {children}
+        <p> {poke.name} ${(poke.id)*100},00 </p>
+        {children}
         </div>
       </li>
     </ul>
