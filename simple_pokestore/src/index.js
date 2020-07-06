@@ -11,7 +11,7 @@ const Pokemon = props => {
   return (
     <div className="poke">
       <img className="photo" src={poke.sprites.front_default}/>
-        {poke.name} ${poke.id}
+        {poke.name} ${(poke.id)*100}
         {children}
     </div>
   );
@@ -26,7 +26,7 @@ const Cart = props => {
       <li>
         <img className="photo-cart" src={poke.sprites.front_default}/>
         <div>
-          {poke.name} ${poke.id}
+          {poke.name} ${(poke.id)*100}
           {children}
         </div>
       </li>
@@ -74,7 +74,7 @@ function App() {
 
   //Function to calculate total price of cart
   const calculatePrice = () => {
-    return cart.reduce((price, poke) => price + poke.id, 0);
+    return cart.reduce((price, poke) => price + ((poke.id)*100), 0);
   };
 
   return (
