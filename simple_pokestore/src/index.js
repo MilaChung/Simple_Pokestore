@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import "./style.css"
+import pokeapi from './pokeapi';
 
 //Function to call the pokemon and price
 const Pokemon = props => {
@@ -9,8 +10,8 @@ const Pokemon = props => {
 
   return (
     <div className="poke">
-      <img className="photo" src={poke.photo}/>
-        {poke.name} ${poke.price}
+      <img className="photo" src={poke.sprites.front_default}/>
+        {poke.name} ${poke.id}
         {children}
     </div>
   );
@@ -23,9 +24,9 @@ const Cart = props => {
   return (
     <ul className="item">
       <li>
-        <img className="photo-cart" src={poke.photo}/>
+        <img className="photo-cart" src={poke.sprites.front_default}/>
         <div>
-          {poke.name} ${poke.price}
+          {poke.name} ${poke.id}
           {children}
         </div>
       </li>
@@ -35,21 +36,38 @@ const Cart = props => {
 
 function App() {
   //Initialing the state of obj pokemon 
-  const [pokemon] = useState ([
-    { photo: "https://pokeres.bastionbot.org/images/pokemon/4.png", name: "Charmander", price: 200 },
-    { photo: "https://pokeres.bastionbot.org/images/pokemon/7.png", name: "Squirtle", price: 300 },
-    { photo: "https://pokeres.bastionbot.org/images/pokemon/1.png", name: "Bulbasaur", price: 500 }
-  ]);
+  // const [pokemon] = useState ([
+  //   { photo: "https://pokeres.bastionbot.org/images/pokemon/4.png", name: "Charmander", price: 200 },
+  //   { photo: "https://pokeres.bastionbot.org/images/pokemon/7.png", name: "Squirtle", price: 300 },
+  //   { photo: "https://pokeres.bastionbot.org/images/pokemon/1.png", name: "Bulbasaur", price: 500 }
+  // ]);
 
   //Initialing the state of pokemonSearched
-  const [pokeSearched, setPokeSearched] = useState('');
+  const [ pokeSearched, setPokeSearched ] = useState('');
+  const [ repositories, setRepositories ] = useState([]);
+
+  useEffect(() => {
+    pokeapi.get()
+      .then((response) => response.data.results.map(pokemon => {
+        pokeapi.get(pokemon.url)
+          .then((poke => {
+            repositories.push(poke.data)
+            setRepositories([...repositories])
+          }))
+      }))
+  },[])
+
+  const pokeFilter = repositories.filter(poke => {
+    return pokeSearched !== ""? poke.name.includes(pokeSearched) : poke;
+  });
+ 
 
   //Initialing the state of cart 
   const [cart, setCart] = useState([]);
 
   //Function to update the value of cart
   const addToCart = pokeAdded => {
-    setCart(cart.concat(pokemon[pokeAdded]));
+    setCart(cart.concat(repositories[pokeAdded]));
   };
 
   //Function to calculate total price of cart
@@ -86,7 +104,7 @@ function App() {
       <div className="app">
         <div className="pokemon">
           {/* Show the pokemon list */}
-          {pokemon.map((poke, pokeAdded) => (
+          {repositories.map((poke, pokeAdded) => (
             <Pokemon key={pokeAdded} poke={poke}>
               {/* Button with event, when are clicked call the function addToCart */}
               <button className="button" onClick={() => addToCart(pokeAdded)}>Add to cart</button>
