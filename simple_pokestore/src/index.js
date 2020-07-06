@@ -41,6 +41,9 @@ function App() {
     { photo: "https://pokeres.bastionbot.org/images/pokemon/1.png", name: "Bulbasaur", price: 500 }
   ]);
 
+  //Initialing the state of pokemonSearched
+  const [pokeSearched, setPokeSearched] = useState('');
+
   //Initialing the state of cart 
   const [cart, setCart] = useState([]);
 
@@ -58,6 +61,27 @@ function App() {
     <div>
       <h1 className="title"> Simple Pokestore </h1>
       <hr />
+
+      <div className="searchbar">
+            <div className="search-bar ui segment">
+                <form className="ui form">
+                    <div className="field">
+                        <label> Pokémon Search </label>
+
+                        <input
+                            type="text"
+                            placeholder="pokémon"
+                            value={pokeSearched}
+                            onChange={e => setPokeSearched(e.target.value)}
+                        />
+
+                        <button type="button" className="ui icon button">
+                        <i className="search icon"></i>
+                        </button>
+                    </div>    
+                </form>
+            </div>
+        </div>
 
       <div className="app">
         <div className="pokemon">
