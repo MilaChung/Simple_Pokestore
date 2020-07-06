@@ -46,6 +46,7 @@ function App() {
   const [ pokeSearched, setPokeSearched ] = useState('');
   const [ repositories, setRepositories ] = useState([]);
 
+  //Getting the repositories from pokeapi
   useEffect(() => {
     pokeapi.get()
       .then((response) => response.data.results.map(pokemon => {
@@ -57,6 +58,7 @@ function App() {
       }))
   },[])
 
+  //Filter the pokemon searched
   const pokeFilter = repositories.filter(poke => {
     return pokeSearched !== ""? poke.name.includes(pokeSearched) : poke;
   });
@@ -72,7 +74,7 @@ function App() {
 
   //Function to calculate total price of cart
   const calculatePrice = () => {
-    return cart.reduce((price, poke) => price + poke.price, 0);
+    return cart.reduce((price, poke) => price + poke.id, 0);
   };
 
   return (
@@ -104,7 +106,7 @@ function App() {
       <div className="app">
         <div className="pokemon">
           {/* Show the pokemon list */}
-          {repositories.map((poke, pokeAdded) => (
+          {pokeFilter.map((poke, pokeAdded) => (
             <Pokemon key={pokeAdded} poke={poke}>
               {/* Button with event, when are clicked call the function addToCart */}
               <button className="button" onClick={() => addToCart(pokeAdded)}>Add to cart</button>
