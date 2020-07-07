@@ -44,26 +44,38 @@ function App() {
 
   //Initialing the state of pokemonSearched
   const [ pokeSearched, setPokeSearched ] = useState('');
-  const [ repositories, setRepositories ] = useState([]);
+  let [ repositories, setRepositories ] = useState([]);
+  let [ repositories2, setRepositories2 ] = useState([]);
 
   //Getting the repositories from pokeapi
   useEffect(() => {
+    if(pokeSearched === ''){
     pokeapi.get()
-      .then((response) => response.data.results.map(pokemon => {
-        pokeapi.get(pokemon.url)
-          .then((poke => {
-            repositories.push(poke.data)
-            setRepositories([...repositories])
-          }))
-      }))
-  },[])
+      .then(response => {
+        response.data.results.map(pokemon => {
+          pokeapi.get(pokemon.url)
+            .then(poke => {
+              repositories.push(poke.data);
+              setRepositories([...repositories]);
+            })
+        });
+      })
+    }
+  },[]); 
 
-  //Filter the pokemon searched
-  const pokeFilter = repositories.filter(poke => {
-    return pokeSearched !== ""? poke.name.includes(pokeSearched) : poke;
-  });
- 
+  //Getting the repository of a specific pokemon from pokeapi
+  function Search(){
+    pokeapi.get(`${pokeSearched}`)
+      .then(pokemon => {
+        repositories2.push(pokemon.data);
+        localStorage.setItem('repositories2', repositories2);
+        console.log('teste 1 = ', repositories2);     
+        
+        setRepositories(repositories2);
+      })
+  }  
 
+  console.log('teste 2 = ', repositories2);   
   //Initialing the state of cart 
   const [cart, setCart] = useState([]);
 
@@ -84,7 +96,7 @@ function App() {
 
       <div className="searchbar">
             <div className="search-bar ui segment">
-                <form className="ui form">
+                <form method="get" className="ui form">
                     <div className="field">
                         <label> Pokémon Search </label>
 
@@ -95,7 +107,7 @@ function App() {
                             onChange={e => setPokeSearched(e.target.value)}
                         />
 
-                        <button type="button" className="ui icon button">
+                        <button type="button"  onClick={Search} className="ui icon button">
                         <i className="search icon"></i>
                         </button>
                     </div>    
@@ -106,7 +118,7 @@ function App() {
       <div className="app">
         <div className="pokemon">
           {/* Show the pokemon list */}
-          {pokeFilter.map((poke, pokeAdded) => (
+          {repositories.map((poke, pokeAdded) => (
             <Pokemon key={pokeAdded} poke={poke}>
               {/* Button with event, when are clicked call the function addToCart */}
               <button className="button" onClick={() => addToCart(pokeAdded)}>Add to cart</button>
