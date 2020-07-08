@@ -87,7 +87,6 @@ function App() {
   return (
     <div>
       <h1 className="title"> Simple Pokestore </h1>
-      <hr />
 
       <div className="searchbar">
             <div className="search-bar ui segment">
