@@ -12,14 +12,14 @@ const Pokemon = props => {
     <div className="poke">
       <img className="photo" src={poke.sprites.front_default}/>
       <p> {poke.name} ${(poke.id)*100},00 </p>
-        {children}
+      <div>{children}</div>  
     </div>
   );
 };
 
 //Function to call the cart 
 const Cart = props => {
-  const { poke, children } = props;
+  const { poke } = props;
 
   return (
     <ul className="item">
@@ -27,7 +27,6 @@ const Cart = props => {
         <img className="photo-cart" src={poke.sprites.front_default}/>
         <div>
         <p> {poke.name} ${(poke.id)*100},00 </p>
-        {children}
         </div>
       </li>
     </ul>
@@ -69,10 +68,9 @@ function App() {
         setRepositories(repositories2.filter(poke =>{
           return pokeSearched !== ""? poke.name.includes(pokeSearched) : poke;
         }));
-       
-      })  
+      })
   }  
- 
+
   //Initialing the state of cart 
   const [cart, setCart] = useState([]);
 
@@ -93,7 +91,7 @@ function App() {
 
       <div className="searchbar">
             <div className="search-bar ui segment">
-                <form onSubmit={Search} className="ui form">
+                <form className="ui form">
                     <div className="field">
                         <label> Pokémon Search </label>
 
