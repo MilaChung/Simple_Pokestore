@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import "./style.css"
+import "./style.css";
 import pokeapi from './pokeapi';
 
 //Function to call the pokemon and price
 const Pokemon = props => {
   //Initialing the value of variable pokemon and cart button
-  const { photo, poke, children } = props;
+  const { poke, children } = props;
 
   return (
     <div className="poke">
@@ -19,7 +19,7 @@ const Pokemon = props => {
 
 //Function to call the cart 
 const Cart = props => {
-  const { photo, poke, children } = props;
+  const { poke, children } = props;
 
   return (
     <ul className="item">
@@ -49,7 +49,6 @@ function App() {
 
   //Getting the repositories from pokeapi
   useEffect(() => {
-    if(pokeSearched === ''){
     pokeapi.get()
       .then(response => {
         response.data.results.map(pokemon => {
@@ -60,22 +59,20 @@ function App() {
             })
         });
       })
-    }
   },[]); 
 
-  //Getting the repository of a specific pokemon from pokeapi
   function Search(){
     pokeapi.get(`${pokeSearched}`)
       .then(pokemon => {
         repositories2.push(pokemon.data);
-        localStorage.setItem('repositories2', repositories2);
-        console.log('teste 1 = ', repositories2);     
-        
-        setRepositories(repositories2);
-      })
-  }  
 
-  console.log('teste 2 = ', repositories2);   
+        setRepositories(repositories2.filter(poke =>{
+          return pokeSearched !== ""? poke.name.includes(pokeSearched) : poke;
+        }));
+       
+      })  
+  }  
+ 
   //Initialing the state of cart 
   const [cart, setCart] = useState([]);
 
@@ -96,7 +93,7 @@ function App() {
 
       <div className="searchbar">
             <div className="search-bar ui segment">
-                <form method="get" className="ui form">
+                <form onSubmit={Search} className="ui form">
                     <div className="field">
                         <label> Pokémon Search </label>
 
@@ -107,7 +104,7 @@ function App() {
                             onChange={e => setPokeSearched(e.target.value)}
                         />
 
-                        <button type="button"  onClick={Search} className="ui icon button">
+                        <button type="button" onClick={Search} className="ui icon button">
                         <i className="search icon"></i>
                         </button>
                     </div>    
